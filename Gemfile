@@ -36,6 +36,7 @@ gem 'thin'
 gem 'unf'
 gem 'vcap_common', '~> 4.0.4'
 gem 'yajl-ruby'
+gem 'tiny_tds', '1.0.5'
 
 gem 'fog-aws'
 gem 'fog-azure-rm'

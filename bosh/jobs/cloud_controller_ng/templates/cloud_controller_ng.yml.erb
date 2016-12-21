@@ -193,6 +193,12 @@ doppler:
 %>
 db: &db
   database: "<%= p("ccdb.db_scheme") == "mysql" ? "mysql2" : p("ccdb.db_scheme") %>://<%= db_role["name"] %>:<%= URI.escape(db_role["password"]) %>@<%= database_address %>:<%= p("ccdb.port") %>/<%= db["name"] %>"
+  <% if_p("ccdb.azure") do |azure| %>
+  azure: <%= azure %>
+  <% end %>
+  <% if_p("ccdb.db_type") do |db_type| %>
+  db_type: <%= db_type %>
+  <% end %>
   max_connections: <%= p("ccdb.max_connections") %>
   pool_timeout: <%= p("ccdb.pool_timeout") %>
   log_level: <%= p("cc.db_logging_level") %>
