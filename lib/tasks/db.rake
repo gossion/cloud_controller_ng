@@ -32,7 +32,7 @@ namespace :db do
       RakeConfig.config[:db][:database] = DbConfig.new.connection_string
       yield
     else
-      %w(postgres mysql).each do |db_type|
+      %w(postgres mysql mssql).each do |db_type|
         RakeConfig.config[:db][:database] = DbConfig.new(db_type: db_type).connection_string
         puts "Using #{db_type}"
         yield
@@ -88,6 +88,20 @@ namespace :db do
           pass = "--password=#{uri.password}"
         end
       end
+    when "mssql"
+      user = "-u diego"
+      pass = "-p Password-123"
+      if ENV["DB_CONNECTION_STRING"]
+        uri = URI.parse(ENV["DB_CONNECTION_STRING"])
+        host = "-s #{uri.host}"
+        port = "-o #{uri.port}" if uri.port
+        if uri.user
+          user = "-u #{uri.user}"
+        end
+        if uri.password
+          pass = "-p #{uri.password}"
+        end
+      end
     end
     [host, port, user, pass, passenv]
   end
@@ -120,7 +134,7 @@ namespace :db do
 
   task :pick do
     unless ENV['DB_CONNECTION_STRING']
-      ENV['DB'] ||= %w[mysql postgres].sample
+      ENV['DB'] ||= %w[mysql postgres mssql].sample
       puts "Using #{ENV['DB']}"
     end
   end
@@ -142,6 +156,8 @@ namespace :db do
       else
         sh "mysql #{host} #{port} #{user} #{pass} -e 'create database #{db_config.name};'"
       end
+    when 'mssql'
+      sh "mssql #{host} #{port} #{user} #{pass} -q 'create database #{db_config.name};'"
     else
       puts 'rake db:create requires DB to be set to create a database'
     end
@@ -159,6 +175,8 @@ namespace :db do
     when 'mysql'
       if ENV['TRAVIS'] == 'true'
         sh "mysql -e 'drop database if exists #{db_config.name};' -u root"
+    when 'mssql'
+      sh "mssql #{host} #{port} #{user} #{pass} -q \"IF EXISTS (SELECT * FROM master.dbo.sysdatabases WHERE name='#{db_config.name}') DROP DATABASE #{db_config.name};\""
       else
         sh "mysql #{host} #{port} #{user} #{pass} -e 'drop database if exists #{db_config.name};'"
       end
