@@ -89,7 +89,7 @@ namespace :db do
         end
       end
     when "mssql"
-      user = "-u diego"
+      user = "-u sa"
       pass = "-p Password-123"
       if ENV["DB_CONNECTION_STRING"]
         uri = URI.parse(ENV["DB_CONNECTION_STRING"])

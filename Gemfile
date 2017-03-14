@@ -26,7 +26,9 @@ gem 'railties'
 gem 'rake'
 gem 'rfc822'
 gem 'rubyzip'
-gem 'sequel'
+
+# mssql supports requires a bug fix that has not yet been released
+gem 'sequel', github: 'jeremyevans/sequel', ref: 'ee83441'
 gem 'sinatra', '~> 1.4'
 gem 'sinatra-contrib'
 gem 'statsd-ruby', '~> 1.4.0'
