@@ -63,6 +63,7 @@ module VCAP::CloudController
 
       db = Sequel.connect(opts[:database], connection_options)
       db.logger = logger
+      # db.logger = Logger.new(STDOUT)
       db.sql_log_level = opts[:log_level] || :debug2
       db.default_collate = 'utf8_bin' if db.database_type == :mysql
 
