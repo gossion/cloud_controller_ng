@@ -12,7 +12,7 @@ module VCAP::CloudController
                                                          [APPS].[GUID],
                                                          [APPS].[NAME],
                                                          STUFF((
-                                                             SELECT ',' + sb.syslog_drain_url
+                                                             SELECT ',' + sb.SYSLOG_DRAIN_URL
                                                              FROM [SERVICE_BINDINGS] sb
                                                              WHERE [APPS].[GUID] = sb.[APP_GUID]
                                                              FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') AS [SYSLOG_DRAIN_URLS],

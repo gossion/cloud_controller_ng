@@ -291,7 +291,7 @@ RSpec.describe 'Apps' do
         get '/v2/apps?q=diego:true', nil, admin_headers
         parsed_response = MultiJson.load(last_response.body)
 
-        expect(last_response.status).to eq(200)
+        expect(last_response.status).to eq(200), "Response Body: #{last_response.body}"
         expect(parsed_response['total_results']).to eq(2)
       end
 
