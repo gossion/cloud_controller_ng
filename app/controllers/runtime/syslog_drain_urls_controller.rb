@@ -25,13 +25,11 @@ module VCAP::CloudController
                                join(ServiceBinding.table_name, app_guid: :guid).
                                where(Sequel.lit('syslog_drain_url IS NOT NULL')).
                                where(Sequel.lit("syslog_drain_url != ''")).
-                               where('syslog_drain_url IS NOT NULL').
-                               where("syslog_drain_url != ''").
                                group("#{AppModel.table_name}__guid".to_sym).
                                select(
                                  "#{AppModel.table_name}__guid".to_sym,
-                                 aggregate_function("#{ServiceBinding.table_name}__syslog_drain_url".to_sym).as(:syslog_drain_urls)
-                               ).
+                                  aggregate_function("#{ServiceBinding.table_name}__syslog_drain_url".to_sym).as(:syslog_drain_urls)
+                                ).
                                order(:guid).
                                limit(batch_size).
                                offset(last_id).
