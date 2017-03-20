@@ -35,10 +35,6 @@ module VCAP::RestAPI
     # @return [Sequel::Dataset]
     def filtered_dataset
       filter_args_from_query.inject(@ds) do |filter, cond|
-        # TODO: can we make better use of Sequel to always upcase column names?
-        if @ds.db.database_type == :mssql && cond[0]
-          cond[0].upcase!
-        end
         filter.filter(cond)
       end
     end
@@ -118,6 +114,7 @@ module VCAP::RestAPI
         else
           Sequel.lit("#{key} #{comparison} ?", values)
         end
+        #TODO: miss https://github.com/cloudfoundry/cloud_controller_ng/pull/802/files#diff-73351e39f3b26bbc5a4186cb9f4fb3c5R111 during rebase
       end
     end
 
