@@ -75,6 +75,7 @@ module VCAP::CloudController
       EM.run do
         begin
           start_cloud_controller
+          #TODO: miss Connect to DB prior to writing pidfile: https://github.com/cloudfoundry/cloud_controller_ng/pull/802/files#diff-fe19359efebf8a93120e2e6a23eae813R75
 
           VCAP::Component.varz.threadsafe! # initialize varz
 
