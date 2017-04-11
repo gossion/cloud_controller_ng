@@ -18,7 +18,7 @@ module VCAP::CloudController
 
     def delete(apps, record_event: true)
       apps.each do |app|
-        app.db.transaction do
+        app.db.transaction(retry_on: [Sequel::SerializationFailure]) do
           app.lock!
           logger.info("Deleting app: #{app.guid}")
 
