@@ -20,7 +20,7 @@ module VCAP::CloudController
       it 'includes data from the config' do
         get '/v2/info'
         hash = MultiJson.load(last_response.body)
-        expect(hash['name']).to eq(TestConfig.config[:info][:name])
+        expect(hash['name']).to eq(TestConfig.config[:info][:name]), hash
         expect(hash['build']).to eq(TestConfig.config[:info][:build])
         expect(hash['support']).to eq(TestConfig.config[:info][:support_address])
         expect(hash['version']).to eq(TestConfig.config[:info][:version])
