@@ -27,8 +27,7 @@ gem 'rake'
 gem 'rfc822'
 gem 'rubyzip'
 
-# mssql supports requires a bug fix that has not yet been released
-gem 'sequel', github: 'jeremyevans/sequel', ref: 'ee83441'
+gem 'sequel'
 gem 'sinatra', '~> 1.4'
 gem 'sinatra-contrib'
 gem 'statsd-ruby', '~> 1.4.0'
@@ -38,7 +37,6 @@ gem 'thin'
 gem 'unf'
 gem 'vcap_common', '~> 4.0.4'
 gem 'yajl-ruby'
-gem 'tiny_tds', '1.0.5'
 gem 'tiny_tds', '~> 1.0.5'
 
 gem 'fog-aws'
